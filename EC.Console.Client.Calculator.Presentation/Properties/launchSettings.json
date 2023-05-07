@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "EC.Console.Client.Calculator.Presentation": {
+      "commandName": "Project",
+      "commandLineArgs": "journal hola"
+    }
+  }
+}
