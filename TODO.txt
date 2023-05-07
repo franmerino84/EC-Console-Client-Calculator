@@ -1,2 +1,4 @@
 Obtener url por config o parámetro
-Centralizar httpclient
+Refactor
+Switcher
+Escenarios de error
