@@ -1,9 +1,10 @@
-﻿using EC.Console.Client.Calculator.Presentation.Processors.Additions;
-using EC.Console.Client.Calculator.Presentation.Processors.Divisions;
-using EC.Console.Client.Calculator.Presentation.Processors.Journals;
-using EC.Console.Client.Calculator.Presentation.Processors.Multiplications;
-using EC.Console.Client.Calculator.Presentation.Processors.SquareRoots;
-using EC.Console.Client.Calculator.Presentation.Processors.Subtractions;
+﻿using EC.Console.Client.Calculator.Services.Processors;
+using EC.Console.Client.Calculator.Services.Processors.Additions;
+using EC.Console.Client.Calculator.Services.Processors.Divisions;
+using EC.Console.Client.Calculator.Services.Processors.Journals;
+using EC.Console.Client.Calculator.Services.Processors.Multiplications;
+using EC.Console.Client.Calculator.Services.Processors.SquareRoots;
+using EC.Console.Client.Calculator.Services.Processors.Subtractions;
 
 namespace EC.Console.Client.Calculator.Presentation.Processors
 {

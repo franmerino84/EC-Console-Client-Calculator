@@ -1,4 +1,4 @@
-﻿using EC.Console.Client.Calculator.Presentation.Exceptions;
+﻿using EC.Console.Client.Calculator.Services.Exceptions;
 using System.Runtime.Serialization;
 
 [Serializable]

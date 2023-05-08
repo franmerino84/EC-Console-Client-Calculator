@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-public class CalculatorSettings
+namespace EC.Console.Client.Calculator.Presentation.Configuration
 {
-    [Required]
-    public string CalculatorApiUrl { get; set; }
+    public class CalculatorSettings
+    {
+        [Required]
+        public string CalculatorApiUrl { get; set; }
+    }
 }

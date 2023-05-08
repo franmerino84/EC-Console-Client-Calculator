@@ -1,9 +1,10 @@
 ﻿using CommandLine;
-using EC.Console.Client.Calculator.Presentation;
 using EC.Console.Client.Calculator.Presentation.Client;
-using EC.Console.Client.Calculator.Presentation.Exceptions;
+using EC.Console.Client.Calculator.Presentation.Configuration;
 using EC.Console.Client.Calculator.Presentation.Processors;
 using EC.Console.Client.Calculator.Presentation.Validation;
+using EC.Console.Client.Calculator.Services.Exceptions;
+using EC.Console.Client.Calculator.Services.Processors;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -45,7 +46,8 @@ static async Task Launch(CalculatorClientConsoleArguments consoleArguments, Calc
     }
     catch (Exception ex)
     {
-        Console.Error.WriteLine($"ERROR CCC999: Unhandled exception: {ex}");
+        var writableException = new ApplicationNumberedErrorException(999, $"Unhandled exception: {ex}");
+        Console.Error.WriteLine(writableException.ConsoleErrorMessage);
         Environment.Exit(-999);
     }
 }
