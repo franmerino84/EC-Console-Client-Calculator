@@ -1,4 +1,6 @@
-﻿namespace EC.Console.Client.Calculator.Presentation.Processors.Additions
+﻿using EC.Console.Client.Calculator.Presentation.Exceptions;
+
+namespace EC.Console.Client.Calculator.Presentation.Processors.Additions
 {
     public class AdditionProcessor : IOperationProcessor
     {
@@ -17,17 +19,17 @@
             System.Console.WriteLine(responseDto.Sum);
         }
 
-        private AdditionRequestDto GetAdditionRequestDto(IEnumerable<string> arguments)
+        private static AdditionRequestDto GetAdditionRequestDto(IEnumerable<string> arguments)
         {
             if (arguments.Count() < 2)
-                return ErrorManager.LaunchError<AdditionRequestDto>(2, "Addition requires at least 2 arguments.");
+                throw new ApplicationNumberedErrorException(2, "Addition requires at least 2 arguments.");
             try
             {
                 return new AdditionRequestDto(arguments.Select(int.Parse));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return ErrorManager.LaunchError<AdditionRequestDto>(3, "All arguments for addition operation must be integer.");
+                throw new ApplicationNumberedErrorException(3, "All arguments for addition operation must be integer.", ex);
             }
         }
     }

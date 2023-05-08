@@ -1,14 +1,17 @@
 ﻿using CommandLine;
 
-internal class CalculatorClientConsoleArguments
+namespace EC.Console.Client.Calculator.Presentation
 {
-    [Value(0, Required = true, HelpText = "Operation to realize (sum/sub/mult/div/sqr/journal)")]
-    public string Operation { get; set; }
+    public class CalculatorClientConsoleArguments
+    {
+        [Value(0, Required = true, HelpText = "Operation to realize (sum/sub/mult/div/sqr/journal)")]
+        public string Operation { get; set; }
 
-    [Value(1, Required = true, HelpText = "Argument of the operation")]
-    public IEnumerable<string> Arguments { get; set; }
+        [Value(1, Required = true, HelpText = "Argument of the operation")]
+        public IEnumerable<string> Arguments { get; set; }
 
-    [Option('t', "trackingid", HelpText = "Tracking id of the request")]
-    public string? TrackingId { get; set; }
+        [Option('t', "trackingid", HelpText = "Tracking id of the request")]
+        public string? TrackingId { get; set; }
 
+    }
 }

@@ -1,4 +1,3 @@
-Obtener url por config o parámetro
 Refactor
 Switcher
-Escenarios de error
+Error raro con el main. Falla al compilar, pero no si depuras o ctrl f5.

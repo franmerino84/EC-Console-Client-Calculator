@@ -1,4 +1,6 @@
-﻿namespace EC.Console.Client.Calculator.Presentation.Processors.Journals
+﻿using EC.Console.Client.Calculator.Presentation.Exceptions;
+
+namespace EC.Console.Client.Calculator.Presentation.Processors.Journals
 {
     public class JournalProcessor : IOperationProcessor
     {
@@ -21,10 +23,10 @@
             
         }
 
-        private JournalRequestDto GetJournalRequestDto(IEnumerable<string> arguments)
+        private static JournalRequestDto GetJournalRequestDto(IEnumerable<string> arguments)
         {
             if (arguments.Count() != 1)
-                return ErrorManager.LaunchError<JournalRequestDto>(8, "Journal query requires exactly 1 argument.");
+                throw new ApplicationNumberedErrorException(8, "Journal query requires exactly 1 argument.");
 
             return new JournalRequestDto(arguments.First());
         }

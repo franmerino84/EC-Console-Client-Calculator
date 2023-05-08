@@ -1,13 +1,23 @@
-﻿
-using CommandLine;
+﻿using CommandLine;
+using EC.Console.Client.Calculator.Presentation;
+using EC.Console.Client.Calculator.Presentation.Client;
+using EC.Console.Client.Calculator.Presentation.Exceptions;
+using EC.Console.Client.Calculator.Presentation.Processors;
+using EC.Console.Client.Calculator.Presentation.Validation;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 var result = Parser.Default.ParseArguments<CalculatorClientConsoleArguments>(args);
 
-Validate(result);
+var settings = GetSettings();
 
-await Launch(result.Value);
+ValidateArguments(result);
 
-static void Validate(ParserResult<CalculatorClientConsoleArguments> result)
+ValidateSettings(settings);
+
+await Launch(result.Value, settings);
+
+static void ValidateArguments(ParserResult<CalculatorClientConsoleArguments> result)
 {
     if (result.Tag == ParserResultType.NotParsed)
     {
@@ -16,15 +26,62 @@ static void Validate(ParserResult<CalculatorClientConsoleArguments> result)
     }
 }
 
-static async Task Launch(CalculatorClientConsoleArguments consoleArguments)
+static async Task Launch(CalculatorClientConsoleArguments consoleArguments, CalculatorSettings settings)
 {
     try
     {
-        var client = new CalculatorClient();
+        var serviceProvider = BuildServiceProvider(settings);
 
-        await client.Process(consoleArguments);
+        var client = serviceProvider.GetService<ICalculatorClient>();
+
+        await client.Process(consoleArguments, settings);
 
         Environment.Exit(0);
     }
-    catch { }
+    catch (ApplicationNumberedErrorException ex)
+    {
+        Console.Error.WriteLine(ex.ConsoleErrorMessage);
+        Environment.Exit(0 - ex.ErrorNumber);
+    }
+    catch (Exception ex)
+    {
+        Console.Error.WriteLine($"ERROR CCC999: Unhandled exception: {ex}");
+        Environment.Exit(-999);
+    }
 }
+
+static ServiceProvider BuildServiceProvider(CalculatorSettings settings)
+{
+    var serviceCollection = new ServiceCollection();
+    serviceCollection.AddSingleton<IOperationProcessorFactory, OperationProcessorFactory>();
+    serviceCollection.AddSingleton<ICalculatorApiManager, CalculatorApiManager>(x => new CalculatorApiManager(settings.CalculatorApiUrl));
+    serviceCollection.AddSingleton<ICalculatorClient, CalculatorClient>();
+
+    return serviceCollection.BuildServiceProvider();
+}
+
+static CalculatorSettings GetSettings()
+{
+    var configuration = new ConfigurationBuilder()
+         .AddJsonFile($"appsettings.json");
+
+    var configurationRoot = configuration.Build();
+    var settings = new CalculatorSettings();
+    configurationRoot.GetSection("CalculatorSettings").Bind(settings);
+
+    return settings;
+}
+
+static void ValidateSettings(CalculatorSettings settings)
+{
+    var errors = settings.GetValidationErrorsMessages();
+
+    if (errors.Any())
+    {
+        Console.Error.WriteLine("ERROR CCC012:");
+        errors.ToList().ForEach(Console.Error.WriteLine);
+        Environment.Exit(-12);
+    }
+}
+
+

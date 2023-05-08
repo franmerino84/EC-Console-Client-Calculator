@@ -1,4 +1,6 @@
-﻿namespace EC.Console.Client.Calculator.Presentation.Processors.Multiplications
+﻿using EC.Console.Client.Calculator.Presentation.Exceptions;
+
+namespace EC.Console.Client.Calculator.Presentation.Processors.Multiplications
 {
     public class MultiplicationProcessor : IOperationProcessor
     {
@@ -17,17 +19,17 @@
             System.Console.WriteLine(responseDto.Product);
         }
 
-        private MultiplicationRequestDto GetMultiplicationRequestDto(IEnumerable<string> arguments)
+        private static MultiplicationRequestDto GetMultiplicationRequestDto(IEnumerable<string> arguments)
         {
             if (arguments.Count() < 2)
-                return ErrorManager.LaunchError<MultiplicationRequestDto>(6, "Multiplication requires at least 2 arguments.");
+                throw new ApplicationNumberedErrorException(6, "Multiplication requires at least 2 arguments.");
             try
             {
                 return new MultiplicationRequestDto(arguments.Select(int.Parse));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return ErrorManager.LaunchError<MultiplicationRequestDto>(7, "All arguments for multiplication operation must be integer.");
+                throw new ApplicationNumberedErrorException(7, "All arguments for multiplication operation must be integer.", ex);
             }
         }
     }

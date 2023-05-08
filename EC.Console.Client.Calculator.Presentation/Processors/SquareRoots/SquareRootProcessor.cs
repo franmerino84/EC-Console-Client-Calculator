@@ -1,4 +1,6 @@
-﻿namespace EC.Console.Client.Calculator.Presentation.Processors.SquareRoots
+﻿using EC.Console.Client.Calculator.Presentation.Exceptions;
+
+namespace EC.Console.Client.Calculator.Presentation.Processors.SquareRoots
 {
     public class SquareRootProcessor : IOperationProcessor
     {
@@ -17,17 +19,17 @@
             System.Console.WriteLine(responseDto.Square);
         }
 
-        private SquareRootRequestDto GetSquareRootRequestDto(IEnumerable<string> arguments)
+        private static SquareRootRequestDto GetSquareRootRequestDto(IEnumerable<string> arguments)
         {
             if (arguments.Count() != 1)
-                return ErrorManager.LaunchError<SquareRootRequestDto>(8, "Square root requires exactly 1 argument.");
+                throw new ApplicationNumberedErrorException(8, "Square root requires exactly 1 argument.");
             try
             {
                 return new SquareRootRequestDto(int.Parse(arguments.First()));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return ErrorManager.LaunchError<SquareRootRequestDto>(9, "The argument for square root operation must be integer.");
+                throw new ApplicationNumberedErrorException(9, "The argument for square root operation must be integer.", ex);
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace EC.Console.Client.Calculator.Presentation.Processors.Subtractions
+﻿using EC.Console.Client.Calculator.Presentation.Exceptions;
+
+namespace EC.Console.Client.Calculator.Presentation.Processors.Subtractions
 {
     public class SubtractionProcessor : IOperationProcessor
     {
@@ -17,17 +19,17 @@
             System.Console.WriteLine(responseDto.Difference);
         }
 
-        private SubtractionRequestDto GetSutbractionRequestDto(IList<string> arguments)
+        private static SubtractionRequestDto GetSutbractionRequestDto(IList<string> arguments)
         {
             if (arguments.Count != 2)
-                return ErrorManager.LaunchError<SubtractionRequestDto>(10, "Subtraction requires exactly 2 arguments.");
+                throw new ApplicationNumberedErrorException(10, "Subtraction requires exactly 2 arguments.");
             try
             {
                 return new SubtractionRequestDto(int.Parse(arguments[0]), int.Parse(arguments[1]));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return ErrorManager.LaunchError<SubtractionRequestDto>(11, "All arguments for subtraction operation must be integer.");
+                throw new ApplicationNumberedErrorException(11, "All arguments for subtraction operation must be integer.", ex);
             }
         }
     }

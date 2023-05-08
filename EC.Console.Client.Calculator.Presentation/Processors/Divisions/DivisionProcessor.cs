@@ -1,4 +1,6 @@
-﻿namespace EC.Console.Client.Calculator.Presentation.Processors.Divisions
+﻿using EC.Console.Client.Calculator.Presentation.Exceptions;
+
+namespace EC.Console.Client.Calculator.Presentation.Processors.Divisions
 {
     public class DivisionProcessor : IOperationProcessor
     {
@@ -17,17 +19,17 @@
             System.Console.WriteLine($"Quotient: {responseDto.Quotient}. Remainder: {responseDto.Remainder}");
         }
 
-        private DivisionRequestDto GetDivisionRequestDto(IList<string> arguments)
+        private static DivisionRequestDto GetDivisionRequestDto(IList<string> arguments)
         {
             if (arguments.Count != 2)
-                return ErrorManager.LaunchError<DivisionRequestDto>(4, "Division requires exactly 2 arguments.");
+                throw new ApplicationNumberedErrorException(4, "Division requires exactly 2 arguments.");
             try
             {
                 return new DivisionRequestDto(int.Parse(arguments[0]), int.Parse(arguments[1]));
             }
-            catch (Exception)
+            catch (Exception ex) 
             {
-                return ErrorManager.LaunchError<DivisionRequestDto>(5, "All arguments for division operation must be integer.");
+                throw new ApplicationNumberedErrorException(5, "All arguments for division operation must be integer.", ex);
             }
         }
     }
