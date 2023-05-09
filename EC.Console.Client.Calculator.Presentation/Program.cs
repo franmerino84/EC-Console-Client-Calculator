@@ -8,6 +8,8 @@ using EC.Console.Client.Calculator.Services.Processors;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+
 var result = Parser.Default.ParseArguments<CalculatorClientConsoleArguments>(args);
 
 var settings = GetSettings();
@@ -86,4 +88,4 @@ static void ValidateSettings(CalculatorSettings settings)
     }
 }
 
-
+#pragma warning restore CS8602 // Dereference of a possibly null reference.

@@ -1,3 +1,1 @@
 Refactor
-Switcher
-Error raro con el main. Falla al compilar, pero no si depuras o ctrl f5.

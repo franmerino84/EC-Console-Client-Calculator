@@ -1,5 +1,5 @@
-﻿using EC.Console.Client.Calculator.Services.Exceptions;
-using EC.Console.Client.Calculator.Services.Processors;
+﻿using EC.Console.Client.Calculator.Services.Processors.Multiplications.Dtos;
+using EC.Console.Client.Calculator.Services.Processors.Multiplications.Exceptions;
 
 namespace EC.Console.Client.Calculator.Services.Processors.Multiplications
 {

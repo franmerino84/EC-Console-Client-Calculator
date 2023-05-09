@@ -1,4 +1,5 @@
-﻿using EC.Console.Client.Calculator.Services.Api;
+﻿using EC.Console.Client.Calculator.Services.Api.Dtos;
+using EC.Console.Client.Calculator.Services.Api.Exceptions;
 using System.Text;
 using System.Text.Json;
 
@@ -53,9 +54,12 @@ namespace EC.Console.Client.Calculator.Services.Processors
         {
             var errorResponseContent = await response.Content.ReadAsStringAsync();
 
-            var deserializedErrorContent = JsonSerializer.Deserialize<ApplicationErrorBody>(errorResponseContent);
+            var deserializedErrorContent = JsonSerializer.Deserialize<ApplicationErrorBodyDto>(errorResponseContent) 
+                ?? throw new ApiResponseErrorException(new ApplicationErrorBodyDto("Unknown", (int)response.StatusCode, errorResponseContent));
 
-            throw new ApiResponseError(deserializedErrorContent);
+            throw new ApiResponseErrorException(deserializedErrorContent);
+
+            
         }
 
         private HttpClient GetHttpClient(string? trackingId)

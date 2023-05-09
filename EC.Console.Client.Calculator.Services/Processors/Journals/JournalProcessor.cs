@@ -1,4 +1,5 @@
-﻿using EC.Console.Client.Calculator.Services.Processors;
+﻿using EC.Console.Client.Calculator.Services.Processors.Journals.Dtos;
+using EC.Console.Client.Calculator.Services.Processors.Journals.Exceptions;
 
 namespace EC.Console.Client.Calculator.Services.Processors.Journals
 {

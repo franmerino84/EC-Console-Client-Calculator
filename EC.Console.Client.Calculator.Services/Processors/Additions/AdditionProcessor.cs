@@ -1,4 +1,5 @@
-﻿using EC.Console.Client.Calculator.Services.Processors;
+﻿using EC.Console.Client.Calculator.Services.Processors.Additions.Dtos;
+using EC.Console.Client.Calculator.Services.Processors.Additions.Exceptions;
 
 namespace EC.Console.Client.Calculator.Services.Processors.Additions
 {

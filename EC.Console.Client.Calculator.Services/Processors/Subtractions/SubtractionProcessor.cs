@@ -1,4 +1,5 @@
-﻿using EC.Console.Client.Calculator.Services.Processors;
+﻿using EC.Console.Client.Calculator.Services.Processors.Subtractions.Dtos;
+using EC.Console.Client.Calculator.Services.Processors.Subtractions.Exceptions;
 
 namespace EC.Console.Client.Calculator.Services.Processors.Subtractions
 {

@@ -1,5 +1,7 @@
 ﻿using CommandLine;
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
 namespace EC.Console.Client.Calculator.Presentation.Client
 {
     public class CalculatorClientConsoleArguments
@@ -15,3 +17,5 @@ namespace EC.Console.Client.Calculator.Presentation.Client
 
     }
 }
+
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

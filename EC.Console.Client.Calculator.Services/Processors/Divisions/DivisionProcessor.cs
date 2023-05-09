@@ -1,4 +1,5 @@
-﻿using EC.Console.Client.Calculator.Services.Processors;
+﻿using EC.Console.Client.Calculator.Services.Processors.Divisions.Dtos;
+using EC.Console.Client.Calculator.Services.Processors.Divisions.Exceptions;
 
 namespace EC.Console.Client.Calculator.Services.Processors.Divisions
 {

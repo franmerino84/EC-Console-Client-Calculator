@@ -1,4 +1,5 @@
-﻿using EC.Console.Client.Calculator.Services.Processors;
+﻿using EC.Console.Client.Calculator.Services.Processors.SquareRoots.Dtos;
+using EC.Console.Client.Calculator.Services.Processors.SquareRoots.Exceptions;
 
 namespace EC.Console.Client.Calculator.Services.Processors.SquareRoots
 {
