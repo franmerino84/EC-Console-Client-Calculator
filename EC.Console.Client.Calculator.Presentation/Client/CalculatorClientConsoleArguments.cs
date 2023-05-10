@@ -9,7 +9,7 @@ namespace EC.Console.Client.Calculator.Presentation.Client
         [Value(0, Required = true, HelpText = "Operation to realize (sum/sub/mult/div/sqr/journal)")]
         public string Operation { get; set; }
 
-        [Value(1, Required = true, HelpText = "Argument of the operation")]
+        [Value(1, Required = true, HelpText = "Arguments of the operation (can very many arguments separated by whitespace)")]
         public IEnumerable<string> Arguments { get; set; }
 
         [Option('t', "trackingid", HelpText = "Tracking id of the request")]
