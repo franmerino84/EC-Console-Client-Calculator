@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EC.Console.Client.Calculator.Services.Processors.Journals
+namespace EC.Console.Client.Calculator.Services.Processors.Journals.Dtos
 {
     public class JournalQueryOperationDto
     {

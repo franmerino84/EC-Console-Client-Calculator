@@ -1,23 +1,28 @@
-﻿using EC.Console.Client.Calculator.Services.Processors.Subtractions.Dtos;
+﻿using AutoMapper;
+using EC.Console.Client.Calculator.Services.Processors.Subtractions.Dtos;
 using EC.Console.Client.Calculator.Services.Processors.Subtractions.Exceptions;
 
 namespace EC.Console.Client.Calculator.Services.Processors.Subtractions
 {
-    public class SubtractionProcessor : IOperationProcessor
+    public class SubtractionResolver : IOperationResolver<SubtractionResponse>
     {
         private readonly ICalculatorApiManager _calculatorApiManager;
+        private readonly IMapper _mapper;
 
-        public SubtractionProcessor(ICalculatorApiManager calculatorApiManager)
+        public SubtractionResolver(ICalculatorApiManager calculatorApiManager, IMapper mapper)
         {
             _calculatorApiManager = calculatorApiManager;
+            _mapper = mapper;
         }
-        public async Task Process(IEnumerable<string> arguments, string? trackingId)
+        public async Task<SubtractionResponse> Calculate(IEnumerable<string> arguments, string? trackingId)
         {
             var requestDto = GetSutbractionRequestDto(arguments.ToArray());
 
             var responseDto = await _calculatorApiManager.PostAsync<SubtractionRequestDto, SubtractionResponseDto>("calculator/sub", requestDto, trackingId);
 
-            System.Console.WriteLine(responseDto.Difference);
+            var response = _mapper.Map<SubtractionResponse>(responseDto);
+
+            return response;
         }
 
         private static SubtractionRequestDto GetSutbractionRequestDto(IList<string> arguments)

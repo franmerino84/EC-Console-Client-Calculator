@@ -1,23 +1,29 @@
-﻿using EC.Console.Client.Calculator.Services.Processors.SquareRoots.Dtos;
+﻿using AutoMapper;
+using EC.Console.Client.Calculator.Services.Processors.Multiplications;
+using EC.Console.Client.Calculator.Services.Processors.SquareRoots.Dtos;
 using EC.Console.Client.Calculator.Services.Processors.SquareRoots.Exceptions;
 
 namespace EC.Console.Client.Calculator.Services.Processors.SquareRoots
 {
-    public class SquareRootProcessor : IOperationProcessor
+    public class SquareRootResolver : IOperationResolver<SquareRootResponse>
     {
         private readonly ICalculatorApiManager _calculatorApiManager;
+        private readonly IMapper _mapper;
 
-        public SquareRootProcessor(ICalculatorApiManager calculatorApiManager)
+        public SquareRootResolver(ICalculatorApiManager calculatorApiManager, IMapper mapper)
         {
             _calculatorApiManager = calculatorApiManager;
+            _mapper = mapper;
         }
-        public async Task Process(IEnumerable<string> arguments, string? trackingId)
+        public async Task<SquareRootResponse> Calculate(IEnumerable<string> arguments, string? trackingId)
         {
             var requestDto = GetSquareRootRequestDto(arguments);
 
-            var responseDto = await _calculatorApiManager.PostAsync<SquareRootRequestDto, SquareRootResponseDto>("calculator/sqrt", requestDto, trackingId);
+            var responseDto = await _calculatorApiManager.PostAsync<SquareRootRequestDto, SquareRootResponse>("calculator/sqrt", requestDto, trackingId);
 
-            System.Console.WriteLine(responseDto.Square);
+            var response = _mapper.Map<SquareRootResponse>(responseDto);
+
+            return response;
         }
 
         private static SquareRootRequestDto GetSquareRootRequestDto(IEnumerable<string> arguments)

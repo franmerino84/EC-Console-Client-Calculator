@@ -13,6 +13,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EC.Console.Client.Calculator.Services", "EC.Console.Client.Calculator.Services\EC.Console.Client.Calculator.Services.csproj", "{18B3049F-14B6-40A0-9FBA-0857D8EB8AA5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Services", "1. Services", "{36D9033A-5368-4573-90C5-C1C76C08AAA2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Presentation", "2. Presentation", "{AE62A05F-B3CC-461C-9C84-2FBE19E46905}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Test", "3. Test", "{9F113763-1EE0-44F6-8516-DF22E5F6F13B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.1. Services", "3.1. Services", "{A61E393D-089A-4312-A0A3-533018545A20}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.2. Presentation", "3.2. Presentation", "{AE5F16D2-CEB7-46A8-858A-E95CC1ECB3A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +40,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{26F793CD-C584-4AFA-A653-3024DC1FC22E} = {AE62A05F-B3CC-461C-9C84-2FBE19E46905}
+		{18B3049F-14B6-40A0-9FBA-0857D8EB8AA5} = {36D9033A-5368-4573-90C5-C1C76C08AAA2}
+		{A61E393D-089A-4312-A0A3-533018545A20} = {9F113763-1EE0-44F6-8516-DF22E5F6F13B}
+		{AE5F16D2-CEB7-46A8-858A-E95CC1ECB3A9} = {9F113763-1EE0-44F6-8516-DF22E5F6F13B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C5AB8762-F945-41BE-97E3-19A4AE8CF656}

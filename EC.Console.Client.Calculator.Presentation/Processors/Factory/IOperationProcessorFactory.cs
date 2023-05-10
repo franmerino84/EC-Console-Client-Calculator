@@ -1,4 +1,4 @@
-﻿namespace EC.Console.Client.Calculator.Presentation.Processors
+﻿namespace EC.Console.Client.Calculator.Presentation.Processors.Factory
 {
     public interface IOperationProcessorFactory
     {

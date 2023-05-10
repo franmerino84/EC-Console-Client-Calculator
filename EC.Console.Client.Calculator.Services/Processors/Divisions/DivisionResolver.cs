@@ -1,23 +1,28 @@
-﻿using EC.Console.Client.Calculator.Services.Processors.Divisions.Dtos;
+﻿using AutoMapper;
+using EC.Console.Client.Calculator.Services.Processors.Divisions.Dtos;
 using EC.Console.Client.Calculator.Services.Processors.Divisions.Exceptions;
 
 namespace EC.Console.Client.Calculator.Services.Processors.Divisions
 {
-    public class DivisionProcessor : IOperationProcessor
+    public class DivisionResolver : IOperationResolver<DivisionResponse>
     {
         private readonly ICalculatorApiManager _calculatorApiManager;
+        private readonly IMapper _mapper;
 
-        public DivisionProcessor(ICalculatorApiManager calculatorApiManager)
+        public DivisionResolver(ICalculatorApiManager calculatorApiManager, IMapper mapper)
         {
             _calculatorApiManager = calculatorApiManager;
+            _mapper = mapper;
         }
-        public async Task Process(IEnumerable<string> arguments, string? trackingId)
+        public async Task<DivisionResponse> Calculate(IEnumerable<string> arguments, string? trackingId)
         {
             var requestDto = GetDivisionRequestDto(arguments.ToArray());
 
-            var responseDto = await _calculatorApiManager.PostAsync<DivisionRequestDto, DivisionResponseDto>("calculator/div", requestDto, trackingId);
+            var responseDto = await _calculatorApiManager.PostAsync<DivisionRequestDto, DivisionResponse>("calculator/div", requestDto, trackingId);
 
-            System.Console.WriteLine($"Quotient: {responseDto.Quotient}. Remainder: {responseDto.Remainder}");
+            var response = _mapper.Map<DivisionResponse>(responseDto);
+
+            return response;
         }
 
         private static DivisionRequestDto GetDivisionRequestDto(IList<string> arguments)

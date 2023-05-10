@@ -1,23 +1,28 @@
-﻿using EC.Console.Client.Calculator.Services.Processors.Multiplications.Dtos;
+﻿using AutoMapper;
+using EC.Console.Client.Calculator.Services.Processors.Multiplications.Dtos;
 using EC.Console.Client.Calculator.Services.Processors.Multiplications.Exceptions;
 
 namespace EC.Console.Client.Calculator.Services.Processors.Multiplications
 {
-    public class MultiplicationProcessor : IOperationProcessor
+    public class MultiplicationResolver : IOperationResolver<MultiplicationResponse>
     {
         private readonly ICalculatorApiManager _calculatorApiManager;
+        private readonly IMapper _mapper;
 
-        public MultiplicationProcessor(ICalculatorApiManager calculatorApiManager)
+        public MultiplicationResolver(ICalculatorApiManager calculatorApiManager, IMapper mapper)
         {
             _calculatorApiManager = calculatorApiManager;
+            _mapper = mapper;
         }
-        public async Task Process(IEnumerable<string> arguments, string? trackingId)
+        public async Task<MultiplicationResponse> Calculate(IEnumerable<string> arguments, string? trackingId)
         {
             var requestDto = GetMultiplicationRequestDto(arguments);
 
-            var responseDto = await _calculatorApiManager.PostAsync<MultiplicationRequestDto, MultiplicationResponseDto>("calculator/mult", requestDto, trackingId);
+            var responseDto = await _calculatorApiManager.PostAsync<MultiplicationRequestDto, MultiplicationResponse>("calculator/mult", requestDto, trackingId);
 
-            System.Console.WriteLine(responseDto.Product);
+            var response = _mapper.Map<MultiplicationResponse>(responseDto);
+
+            return response;
         }
 
         private static MultiplicationRequestDto GetMultiplicationRequestDto(IEnumerable<string> arguments)

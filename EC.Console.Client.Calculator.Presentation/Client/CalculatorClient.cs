@@ -1,5 +1,5 @@
 ﻿using EC.Console.Client.Calculator.Presentation.Configuration;
-using EC.Console.Client.Calculator.Presentation.Processors;
+using EC.Console.Client.Calculator.Presentation.Processors.Factory;
 
 namespace EC.Console.Client.Calculator.Presentation.Client
 {

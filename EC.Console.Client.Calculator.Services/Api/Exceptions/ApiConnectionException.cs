@@ -12,7 +12,7 @@ namespace EC.Console.Client.Calculator.Services.Api.Exceptions
         {
         }
 
-        public ApiConnectionException(Exception? innerException) : base(_errorNumber, DefaultErrorMessage($": {innerException}"))
+        public ApiConnectionException(Exception innerException) : base(_errorNumber, DefaultErrorMessage($": {innerException.Message}"))
         {
         }
 
