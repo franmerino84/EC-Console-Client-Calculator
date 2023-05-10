@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 using EC.Console.Client.Calculator.Services.Exceptions;
 using EC.Console.Client.Calculator.Services.Api.Dtos;
 
-namespace EC.Console.Client.Calculator.Services.Processors
+namespace EC.Console.Client.Calculator.Services.Resolvers
 {
     [Serializable]
     public class ApiResponseErrorException : ApplicationNumberedErrorException

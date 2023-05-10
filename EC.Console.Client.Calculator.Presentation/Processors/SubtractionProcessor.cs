@@ -1,19 +1,19 @@
-﻿using EC.Console.Client.Calculator.Services.Processors.Subtractions;
+﻿using EC.Console.Client.Calculator.Services.Resolvers.Subtractions;
 
 namespace EC.Console.Client.Calculator.Presentation.Processors
 {
     public class SubtractionProcessor : IOperationProcessor
     {
-        private readonly IOperationResolver<SubtractionResponse> _calculator;
+        private readonly IOperationResolver<SubtractionResponse> _resolver;
 
-        public SubtractionProcessor(IOperationResolver<SubtractionResponse> calculator)
+        public SubtractionProcessor(IOperationResolver<SubtractionResponse> resolver)
         {
-            _calculator = calculator;
+            _resolver = resolver;
         }
 
         public async Task Process(IEnumerable<string> arguments, string? trackingId)
         {
-            var result = await _calculator.Calculate(arguments, trackingId);
+            var result = await _resolver.Resolve(arguments, trackingId);
 
             System.Console.WriteLine(result.Difference);
         }

@@ -2,26 +2,15 @@
 using EC.Console.Client.Calculator.Presentation.Client;
 using EC.Console.Client.Calculator.Presentation.Configuration;
 using EC.Console.Client.Calculator.Presentation.Ioc;
-using EC.Console.Client.Calculator.Presentation.Processors;
-using EC.Console.Client.Calculator.Presentation.Processors.Factory;
 using EC.Console.Client.Calculator.Presentation.Validation;
 using EC.Console.Client.Calculator.Services.Exceptions;
-using EC.Console.Client.Calculator.Services.Processors;
-using EC.Console.Client.Calculator.Services.Processors.Additions;
-using EC.Console.Client.Calculator.Services.Processors.Additions.Dtos;
-using EC.Console.Client.Calculator.Services.Processors.Divisions;
-using EC.Console.Client.Calculator.Services.Processors.Journals;
-using EC.Console.Client.Calculator.Services.Processors.Multiplications;
-using EC.Console.Client.Calculator.Services.Processors.SquareRoots;
-using EC.Console.Client.Calculator.Services.Processors.Subtractions;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 
 var result = Parser.Default.ParseArguments<CalculatorClientConsoleArguments>(args);
 
-var settings = GetSettings();
+var settings = CalculatorSettingsRetriever.GetSettings();
 
 ValidateArguments(result);
 
@@ -42,7 +31,7 @@ static async Task Launch(CalculatorClientConsoleArguments consoleArguments, Calc
 {
     try
     {
-        var serviceProvider = BuildServiceProvider(settings);
+        var serviceProvider = ServiceProviderBuilder.Build(settings);
 
         var client = serviceProvider.GetService<ICalculatorClient>();
 
@@ -61,41 +50,6 @@ static async Task Launch(CalculatorClientConsoleArguments consoleArguments, Calc
         Console.Error.WriteLine(writableException.ConsoleErrorMessage);
         Environment.Exit(-999);
     }
-}
-
-static ServiceProvider BuildServiceProvider(CalculatorSettings settings)
-{
-    var serviceCollection = new ServiceCollection();
-    serviceCollection.AddMappings();
-    serviceCollection.AddSingleton<IOperationProcessorFactory, OperationProcessorFactory>();
-    serviceCollection.AddSingleton<ICalculatorApiManager, CalculatorApiManager>(x => new CalculatorApiManager(settings.CalculatorApiUrl));
-    serviceCollection.AddSingleton<ICalculatorClient, CalculatorClient>();
-    serviceCollection.AddSingleton<IOperationResolver<AdditionResponse>, AdditionResolver>();
-    serviceCollection.AddSingleton<IOperationResolver<DivisionResponse>, DivisionResolver>();
-    serviceCollection.AddSingleton<IOperationResolver<MultiplicationResponse>, MultiplicationResolver>();
-    serviceCollection.AddSingleton<IOperationResolver<SquareRootResponse>, SquareRootResolver>();
-    serviceCollection.AddSingleton<IOperationResolver<SubtractionResponse>, SubtractionResolver>();
-    serviceCollection.AddSingleton<IOperationResolver<JournalResponse>, JournalResolver>();
-    serviceCollection.AddSingleton(x => new AdditionProcessor(x.GetService<IOperationResolver<AdditionResponse>>()));
-    serviceCollection.AddSingleton(x => new DivisionProcessor(x.GetService<IOperationResolver<DivisionResponse>>()));
-    serviceCollection.AddSingleton(x => new MultiplicationProcessor(x.GetService<IOperationResolver<MultiplicationResponse>>()));
-    serviceCollection.AddSingleton(x => new SquareRootProcessor(x.GetService<IOperationResolver<SquareRootResponse>>()));
-    serviceCollection.AddSingleton(x => new SubtractionProcessor(x.GetService<IOperationResolver<SubtractionResponse>>()));
-    serviceCollection.AddSingleton(x => new JournalProcessor(x.GetService<IOperationResolver<JournalResponse>>()));
-
-    return serviceCollection.BuildServiceProvider();
-}
-
-static CalculatorSettings GetSettings()
-{
-    var configuration = new ConfigurationBuilder()
-         .AddJsonFile($"appsettings.json");
-
-    var configurationRoot = configuration.Build();
-    var settings = new CalculatorSettings();
-    configurationRoot.GetSection("CalculatorSettings").Bind(settings);
-
-    return settings;
 }
 
 static void ValidateSettings(CalculatorSettings settings)

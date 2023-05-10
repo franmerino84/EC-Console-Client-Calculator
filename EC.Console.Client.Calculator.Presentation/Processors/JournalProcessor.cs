@@ -1,19 +1,19 @@
-﻿using EC.Console.Client.Calculator.Services.Processors.Journals;
+﻿using EC.Console.Client.Calculator.Services.Resolvers.Journals;
 
 namespace EC.Console.Client.Calculator.Presentation.Processors
 {
     public class JournalProcessor : IOperationProcessor
     {
-        private readonly IOperationResolver<JournalResponse> _calculator;
+        private readonly IOperationResolver<JournalResponse> _resolver;
 
-        public JournalProcessor(IOperationResolver<JournalResponse> calculator)
+        public JournalProcessor(IOperationResolver<JournalResponse> resolver)
         {
-            _calculator = calculator;
+            _resolver = resolver;
         }
 
         public async Task Process(IEnumerable<string> arguments, string? trackingId)
         {
-            var result = await _calculator.Calculate(arguments, trackingId);
+            var result = await _resolver.Resolve(arguments, trackingId);
 
             foreach (var operation in result.Operations)
             {
