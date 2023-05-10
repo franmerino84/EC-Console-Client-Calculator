@@ -12,6 +12,8 @@ I've built the application as console. It can be run through Visual Studio, or w
 
 I've used Visual Studio 2022, with projects that run over .NET 6, so make sure you have installed the latest version to run it. Probably it works over previous IDE, but I cannot ensure since I haven't tested it.
 
+The application uses a configuration file appsettings.json with one settings set "CalculatorSettings", and inside the setting "CalculatorApiUrl" that is used to point to the api address.
+
 These are the commands supported:
 --help : shows help
 -t --trackingid <trackingId> : it associate the operation requested to an id to be stored, and retrieved later on
@@ -23,7 +25,7 @@ sqr <number> : it performs the square root of the parameter
 journal <trackingId> : it retrieved all operations requested with that tracking id
 
 ## Architecture of the solution
-I have created two projects: One for presentation of the data, and other for performing the operations throught the API.
+I have created two projects: One for presentation of the data, and other (services) to perform the operations throught the API.
 
 There are also a test project for each of the code projects with unit tests, respecting the source folder structure.
 
@@ -41,12 +43,6 @@ I've seen and worked on multiple projects where the files are organized by its n
 This way of structuring a project has advantages in the sense of you can have a global idea of what kind of things are being done in any of this directories. The big disadvantage here is that there's not any trace between all the classes required to other single class. That can lead to forget some configuration actions (like dependencies injections, or mapping registers).
 
 The key of Screaming Architecture is that, for all those classes that are only used from the same family of classes, to be stored under the same entity directory, and/or use case directory.
-
-So for example, in the presentation layer we have (under the controllers directory, that I respected because of the standard of this key name) a directory for the Calculators, and other for the Journals. Inside them, we have another directory for each use case. In our case a use case it's an endpoint. And inside the use case directory, we have all the controller file, dtos classes and mapping classes.
-
-Just to clarify, I've not created a specific controller per use case, but used the same controller as a partial class.
-
-I'm not very fan of partial classes, but in this case works like a charm, since another typical issue is having very big controller classes that are difficult to read.
 
 ### Object Oriented Programming
 I've tried to make use of OOP techniques over all the solution. Making use of interfaces, abstract classes, generic types, and inheritance.
@@ -96,7 +92,6 @@ I've created a bunch of custom exceptions for different situations in the use ca
 This is a list of next steps I would follow in a real application:
 * Add end to end tests
 * Manage CancellationToken
-* Dockerize API
 * CICD
 * Application versioning
 
