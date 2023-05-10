@@ -35,7 +35,7 @@ static async Task Launch(CalculatorClientConsoleArguments consoleArguments, Calc
 
         var client = serviceProvider.GetService<ICalculatorClient>();
 
-        await client.Process(consoleArguments, settings);
+        await client.Process(consoleArguments);
 
         Environment.Exit(0);
     }

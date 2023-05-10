@@ -1,5 +1,4 @@
-﻿using EC.Console.Client.Calculator.Presentation.Configuration;
-using EC.Console.Client.Calculator.Presentation.Processors.Factory;
+﻿using EC.Console.Client.Calculator.Presentation.Processors.Factory;
 
 namespace EC.Console.Client.Calculator.Presentation.Client
 {
@@ -12,7 +11,7 @@ namespace EC.Console.Client.Calculator.Presentation.Client
             _operationProcessorFactory = operationProcessorFactory;
         }
 
-        public async Task Process(CalculatorClientConsoleArguments consoleArguments, CalculatorSettings applicationConfig)
+        public async Task Process(CalculatorClientConsoleArguments consoleArguments)
         {
             var processor = _operationProcessorFactory.Build(consoleArguments.Operation);
 
